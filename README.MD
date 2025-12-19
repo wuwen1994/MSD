@@ -1,131 +1,144 @@
-# MeT: A Graph Transformer for Semantic Segmentation of 3D Meshes
+# Mask-Free Shadow Detection (MSD)
 
-**Unofficial PyTorch Implementation**
+This repository contains the official implementation of **Mask-Free Shadow Detection (MSD)**, a CVPR-style framework that reformulates shadow detection as an **illumination-induced anomaly localization problem**, eliminating the need for pixel-level shadow mask annotations.
 
-## 📄 Paper
-**Title:** *MeT: A Graph Transformer for Semantic Segmentation of 3D Meshes*  
-**Author:** Wen Wu (Unofficial Version)
-
-> Original Paper Reference:  
-> Vecchio, G., Prezzavento, L., Pino, C., Rundo, F., Palazzo, S., & Spampinato, C.  
-> *Computer Vision and Image Understanding*, 2023.
+> **Paper**: Mask-Free Shadow Detection  
+> **Authors**: Xian-Tao Wu, Wen Wu*, Jifeng Zhu  
+> **Affiliations**: Hangzhou Dianzi University, City University of Hong Kong  
+> **Conference**: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)  
+> **Code**: https://github.com/wuwen1994/MSD  
 
 ---
 
-## ✅ Environment Setup
+## 🔥 Highlights
 
-### Recommended Versions
-```txt
-Python 3.10
-CUDA 11.8
-torch==2.3.1
-tensorboard==2.20.0
-scikit-learn==1.7.2
-scipy==1.15.3
-pillow==12.0.0
-protobuf==6.33.0
-pymesh==1.0.2
-pymeshlab==2025.7
-numpy==1.26.4
-PyYAML==6.0.3
-rtree==1.4.1
-matplotlib==3.8.0
-trimesh==4.9.0
-```
+- 🚫 **Mask-free supervision**: No shadow masks are used during training  
+- 🌞 **Illumination-aware feature disentanglement (IFD)**  
+- 📊 **Dirichlet Process Mixture Model (DPMM)** for shadow-free illumination modeling  
+- 🔁 **Self-training refinement** for pixel-accurate shadow masks  
+- 🏆 Competitive performance against fully & weakly supervised SOTA methods  
+
+---
+
+## 🧠 Method Overview
+
+MSD formulates shadow detection as **anomaly localization under illumination variation**. Given only **shadow-free images**, the model learns a normal illumination distribution, where shadows emerge as deviations at test time.
+
+### Overall Pipeline
+
+![Framework Overview](figures/fig3.png)
+
+**Pipeline stages**:
+1. **Illumination-aware Feature Disentanglement (IFD)**  
+2. **Shadow-Free Distribution Modeling with DPMM**  
+3. **Shadow Anomaly Scoring & Pseudo-label Refinement**
+
+---
+
+## ✨ Illumination-aware Feature Disentanglement (IFD)
+
+To overcome the illumination invariance bias of foundation models (e.g., DINOv2), we disentangle patch embeddings into:
+
+- **Structure subspace** (illumination-invariant)
+- **Illumination subspace** (shadow-sensitive)
+
+![IFD Illustration](figures/fig1.png)
+
+This design enables robust discrimination between **true shadows** and **intrinsically dark objects**.
+
+---
+
+## 📊 Shadow-Free Distribution Modeling
+
+We model the illumination subspace using a **Dirichlet Process Mixture Model (DPMM)**:
+
+- Non-parametric & adaptive
+- Compact memory footprint
+- Efficient inference compared to kNN-based memory banks
+
+![DPMM Visualization](figures/fig2.png)
+
+Shadows are detected as **low-similarity outliers** under the learned illumination distribution.
 
 ---
 
 ## 📂 Dataset
 
-### Download Links
-| Dataset | Link | Code | Target Directory |
-|--------|------|------|----------------|
-| Human  | https://pan.baidu.com/s/1Xv_-Tybn2xclz8dsZ4F3pA | `jtjx` | `data/raw/Human` |
-| Coseg  | https://pan.baidu.com/s/1Y22-Z7JscMim0LGqJNPSQA | `nim7` | `data/raw/coseg` |
+### Shadow Anomaly Detection (SAD) Dataset
 
-### Directory Structure
-```
-data/
- └── raw/
-     ├── Human/
-     └── coseg/
-          ├── aliens/
-          ├── chairs/
-          └── vases/
-```
+We curate a large-scale **shadow-free dataset** from:
+- DESOBA
+- ISTD
+- SRD
+- USR
+- Internet-crawled natural images
+
+**Key properties**:
+- ~4,000 shadow-free images
+- Diverse scenes & illumination
+- Explicit inclusion of dark materials (non-shadow)
+
+> Note: The dataset is used **only for learning normal illumination**, without any shadow masks.
 
 ---
 
-## 🛠️ Data Preprocessing
+## 🧪 Experiments
 
-Includes: **feature extraction**, **clustering**, **padding**
+### Benchmarks
+
+- **SBU** (Relabeled)
+- **ISTD**
+- **UCF**
+
+### Metric
+
+- **Balanced Error Rate (BER)**
+
+### Quantitative Results (BER ↓)
+
+| Method | Supervision | SBU | UCF | ISTD |
+|------|------------|-----|-----|------|
+| MSD (Ours) | Mask-free | **4.37** | **6.14** | **1.11** |
+| SSD | Weakly | 5.27 | 6.94 | 1.48 |
+| SILT | Fully | 4.19 | 7.23 | 1.16 |
+
+MSD achieves **state-of-the-art or competitive performance**, despite using **zero shadow annotations**.
+
+---
+
+## 🔁 Pseudo-label Refinement
+
+Due to patch-level anomaly maps, we apply:
+
+1. Upsampling + DenseCRF
+2. Iterative self-training with a lightweight segmentation network (e.g., U-Net)
+
+This progressively sharpens boundaries and suppresses noise.
+
+---
+
+## 🧩 Applications Beyond Shadows
+
+MSD generalizes naturally to **anomaly segmentation** tasks:
+
+- 🏭 Industrial defect detection  
+- 🏥 Medical image anomaly segmentation (e.g., BMAD)
+
+The DPMM-based modeling is especially effective under **limited normal data**.
+
+---
+
+## ⚠️ Limitations
+
+- Requires a collection of **shadow-free images**
+- Performance depends on initial anomaly map quality
+- Not strictly unsupervised (but fully annotation-free)
+
+---
+
+## 📦 Installation (Coming Soon)
 
 ```bash
-cd data
-
-python preprocess.py --input_root raw/coseg/aliens --output_root processed/coseg/aliens --lam 8 --lap_k 16 --f_pad 1500
-python preprocess.py --input_root raw/coseg/chairs --output_root processed/coseg/chairs --lam 8 --lap_k 16 --f_pad 1000
-python preprocess.py --input_root raw/coseg/vases --output_root processed/coseg/vases --lam 8 --lap_k 16 --f_pad 1000
-python preprocess.py --input_root raw/Human --output_root processed/Human --lam 8 --lap_k 16 --f_pad 1500
-```
-
-Processed data will be saved in:
-```
-data/processed/
-```
-
----
-
-## 🚀 Training
-
-```bash
-python train.py --config config/vases.yaml
-```
-
-You may modify YAML configs for different datasets.
-
----
-
-## 🔍 Testing
-
-```bash
-python test.py --config config/vases.yaml
-```
-
-Results will be saved under the configured experiment directory.
-
----
-
-## 🎨 Visualization
-
-```bash
-python vis.py --obj_path a.obj --seg_path a.seg --save_dir out --no_show
-```
-
-- `obj_path`: Input mesh  
-- `seg_path`: Predicted segmentation  
-- `save_dir`: Output folder  
-- `--no_show`: Disable GUI display (optional)
-
----
-
-## 📚 Citation
-
-If you use this repository for academic purposes, please cite the original paper:
-
-```bibtex
-@article{vecchio2023met,
-  title={MeT: A graph transformer for semantic segmentation of 3D meshes},
-  author={Vecchio, Giuseppe and Prezzavento, Luca and Pino, Carmelo and Rundo, Francesco and Palazzo, Simone and Spampinato, Concetto},
-  journal={Computer Vision and Image Understanding},
-  volume={235},
-  pages={103773},
-  year={2023},
-  publisher={Elsevier}
-}
-```
-
----
-
-## 📌 Disclaimer
-This is an **unofficial implementation** and may differ from the original authors’ code and results.
+git clone https://github.com/wuwen1994/MSD.git
+cd MSD
+pip install -r requirements.txt

@@ -1,11 +1,10 @@
 # Mask-Free Shadow Detection (MSD)
 
-This repository contains the official implementation of **Mask-Free Shadow Detection (MSD)**, a CVPR-style framework that reformulates shadow detection as an **illumination-induced anomaly localization problem**, eliminating the need for pixel-level shadow mask annotations.
+This repository contains the official implementation of **Mask-Free Shadow Detection (MSD)**, a framework that reformulates shadow detection as an **illumination-induced anomaly localization problem**, eliminating the need for pixel-level shadow mask annotations.
 
 > **Paper**: Mask-Free Shadow Detection  
 > **Authors**: Xian-Tao Wu, Wen Wu*, Jifeng Zhu  
 > **Affiliations**: Hangzhou Dianzi University, City University of Hong Kong  
-> **Conference**: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)  
 > **Code**: https://github.com/wuwen1994/MSD  
 
 ---
@@ -142,3 +141,4 @@ The DPMM-based modeling is especially effective under **limited normal data**.
 git clone https://github.com/wuwen1994/MSD.git
 cd MSD
 pip install -r requirements.txt
+

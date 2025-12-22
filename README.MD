@@ -25,7 +25,7 @@ MSD formulates shadow detection as **anomaly localization under illumination var
 
 ### Overall Pipeline
 
-![Framework Overview](figures/fig1.jpg)
+![Framework Overview](fig1.jpg)
 
 **Pipeline stages**:
 1. **Illumination-aware Feature Disentanglement (IFD)**  
@@ -74,6 +74,7 @@ We curate a large-scale **shadow-free dataset** from:
 | SILT | Fully | 4.19 | 7.23 | 1.16 |
 
 MSD achieves **state-of-the-art or competitive performance**, despite using **zero shadow annotations**.
+
 
 
 

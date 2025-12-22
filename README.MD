@@ -41,7 +41,7 @@ To overcome the illumination invariance bias of foundation models (e.g., DINOv2)
 - **Structure subspace** (illumination-invariant)
 - **Illumination subspace** (shadow-sensitive)
 
-![IFD Illustration](figures/fig1.png)
+![IFD Illustration](figures/1.jpg)
 
 This design enables robust discrimination between **true shadows** and **intrinsically dark objects**.
 
@@ -88,4 +88,5 @@ We curate a large-scale **shadow-free dataset** from:
 | SILT | Fully | 4.19 | 7.23 | 1.16 |
 
 MSD achieves **state-of-the-art or competitive performance**, despite using **zero shadow annotations**.
+
 

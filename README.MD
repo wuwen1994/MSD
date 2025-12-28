@@ -69,11 +69,12 @@ We curate a large-scale **shadow-free dataset** from:
 
 | Method | Supervision | SBU | UCF | ISTD |
 |------|------------|-----|-----|------|
-| MSD (Ours) | Mask-free | **4.37** | **6.14** | **1.11** |
+| MSD (Ours) | Mask-free | **4.17** | 7.01 | **1.11** |
 | SSD | Weakly | 5.27 | 6.94 | 1.48 |
 | SILT | Fully | 4.19 | 7.23 | 1.16 |
 
 MSD achieves **state-of-the-art or competitive performance**, despite using **zero shadow annotations**.
+
 
 
 

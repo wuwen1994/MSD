@@ -3,7 +3,6 @@
 This repository contains the official implementation of **Mask-Free Shadow Detection (MSD)**, a framework that reformulates shadow detection as an **illumination-induced anomaly localization problem**, eliminating the need for pixel-level shadow mask annotations.
 
 > **Paper**: Mask-Free Shadow Detection  
-> **Authors**: Xian-Tao Wu, Wen Wu*, Jifeng Zhu  
 > **Affiliations**: Hangzhou Dianzi University, City University of Hong Kong  
 > **Code**: https://github.com/wuwen1994/MSD  
 
@@ -74,6 +73,7 @@ We curate a large-scale **shadow-free dataset** from:
 | SILT | Fully | 4.19 | 7.23 | 1.16 |
 
 MSD achieves **state-of-the-art or competitive performance**, despite using **zero shadow annotations**.
+
 
 
 

@@ -24,8 +24,6 @@ MSD formulates shadow detection as **anomaly localization under illumination var
 
 ### Overall Pipeline
 
-![Framework Overview](fig1.jpg)
-
 **Pipeline stages**:
 1. **Illumination-aware Feature Disentanglement (IFD)**  
 2. **Shadow-Free Distribution Modeling with DPMM**  

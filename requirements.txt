@@ -1,0 +1,21 @@
+# Core dependencies for MSD (Shadow-ANO)
+# PyTorch + torchvision are installed separately with the CUDA wheel index,
+# see docs/ENVIRONMENT.md.
+torch==2.3.1
+torchvision==0.18.1
+anomalib==0.6.0
+torchmetrics>=1.0
+torchtnt==0.2.4
+torch-pca==1.0.0
+timm==0.6.12
+omegaconf>=2.3
+scikit-learn==1.5.1
+scipy>=1.10
+natsort==7.1.1
+numpy==1.26.4
+opencv-python==4.6.0.66
+matplotlib>=3.7
+Pillow>=9.5
+tqdm>=4.65
+wandb==0.18.1
+PyYAML>=6.0

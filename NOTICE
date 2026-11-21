@@ -1,0 +1,19 @@
+Mask-Free Shadow Detection (MSD)
+Copyright 2026 Wen Wu, Lei Yan, Yunze Zhu, Chao Zhang, Xian-Tao Wu, Yanzhong Sun, Yuchang Mo
+
+This product includes software developed at
+AnomalyDINO (https://github.com/dammsi/AnomalyDINO),
+licensed under the Apache License, Version 2.0.
+
+Portions of the following files are adapted from AnomalyDINO:
+
+  main.py
+  src/backbones.py
+  src/data.py
+  src/evaluate.py
+  src/test.py
+  src/train.py
+  src/utils.py
+
+The Dirichlet process mixture implementation in src/DirichletProcessMixture/
+and the config/ directory are original to this work.

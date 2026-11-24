@@ -22,7 +22,7 @@ warnings.filterwarnings("ignore", message=".*not compiled with flash attention.*
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument("--config", type=str, default="config/Diag.yaml")
-    # parser.add_argument("--config", type=str, default="results/Shadow-ANO/dinov2_vits14_dpmm_448_500_diag_/cfg.yaml")
+    # parser.add_argument("--config", type=str, default="results/Shadow-ANO/dinov3_vits16plus_dpmm_448_80_diag_/cfg.yaml")
     parser.add_argument("--override_config", type=bool, default="False")
     args = parser.parse_args()
     return args

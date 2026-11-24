@@ -27,5 +27,5 @@ pip install -r requirements.txt
 
 - `anomalib==0.6.0` is pinned because the feature extractor and metrics APIs changed in later releases.
 - `numpy==1.26.4` is required by the pinned `opencv-python` and `scikit-learn` wheels.
-- The DINOv2 weights are loaded through `torch.hub` on first use and are cached in `~/.cache/torch`.
+- The DINOv3 (`facebookresearch/dinov3`, paper default `dinov3_vits16plus`) and DINOv2 (`facebookresearch/dinov2`) weights are loaded through `torch.hub` on first use and are cached in `~/.cache/torch`.
 - Evaluation writes its outputs next to the checkpoints under `results/`; no external service is required when `wandb_log` is `false`.

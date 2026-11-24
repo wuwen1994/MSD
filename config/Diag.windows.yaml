@@ -1,5 +1,5 @@
 # Windows-local evaluation configuration for the provided Shadow-ANO dataset.
-# It preserves the settings stored with the supplied checkpoint.
+# Aligned with config/Diag.yaml (C=80 diagonal-covariance DPMM).
 embedding_model_name: ${.model_name}_${.density_model.model_name}_${.resolution}
 density_model_name: ${ifequal_else:${.density_model.model_name},dpmm,${density_model.dpmm.max_num_components}_${.density_model.dpmm.gaussian.covariance_type}}
 architecture_name: ${.embedding_model_name}_${.density_model_name}
@@ -8,7 +8,7 @@ tag: ""
 wandb_log: false
 wandb_project: ShadowANO
 resume: true
-model_name: dinov2_vits14
+model_name: dinov3_vits16plus
 normalize_embeddings: true
 use_positional_encoding: false
 embedding_pca_components: -1
@@ -25,15 +25,15 @@ evaluation_max_batch_size: 32768
 normalization: ImageNet
 preprocess: agnostic
 resolution: 448
-feature_resolution_train: 32
-feature_resolution_eval: 32
+feature_resolution_train: -1
+feature_resolution_eval: -1
 visualize_training_step: false
 rotate_visualized_samples: 0
 visualize_embedding_maps: false
 density_model:
   model_name: dpmm
   dpmm:
-    max_num_components: 500
+    max_num_components: 80
     update_rate: 0.2
     schedule: ema
     component_type: gaussian

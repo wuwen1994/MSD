@@ -1,6 +1,6 @@
 """Generate publication-ready feature diagnostics from the saved Shadow-ANO run.
 
-The figure is based on the cached DINOv2/DPMM inference tensors in
+The figure is based on the cached DINOv3/DPMM inference tensors in
 ``test_stats_anomalous.pth``.  It deliberately includes a strong, median, and
 hard sample selected by pixel AUROC so that the panel is not a best-case-only
 visualization.
@@ -32,7 +32,7 @@ def parse_args() -> argparse.Namespace:
         root
         / "results"
         / "Shadow-ANO"
-        / "dinov2_vits14_dpmm_448_500_diag_"
+        / "dinov3_vits16plus_dpmm_448_80_diag_"
     )
     parser = argparse.ArgumentParser()
     parser.add_argument(

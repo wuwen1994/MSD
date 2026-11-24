@@ -269,6 +269,21 @@ class DINOv2Wrapper(VisionTransformerWrapper):
         return mask
 
 
+# DINOv3 Wrapper
+class DINOv3Wrapper(DINOv2Wrapper):
+    def load_model(self):
+        model = torch.hub.load('facebookresearch/dinov3', self.model_name)
+        model.eval()
+
+        self.transform = transforms.Compose([
+            transforms.Resize(size=self.smaller_edge_size, interpolation=transforms.InterpolationMode.BICUBIC, antialias=True),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
+        ])
+
+        return model.to(self.device)
+
+
 class ResNetWrapper(VisionTransformerWrapper):
     model: TimmFeatureExtractor
 
@@ -428,6 +443,14 @@ def get_model(
         )
     elif model_name.startswith("vit"):
         return ViTWrapper(
+            model_name,
+            device,
+            smaller_edge_size,
+            num_pca_components=num_pca_components,
+            normalize_embeddings=normalize_embeddings,
+        )
+    elif model_name.startswith("dinov3"):
+        return DINOv3Wrapper(
             model_name,
             device,
             smaller_edge_size,
